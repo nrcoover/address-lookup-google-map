@@ -5,18 +5,18 @@ import OSM from "ol/source/OSM";
 import { fromLonLat } from "ol/proj";
 
 const form = document.querySelector("form")!;
-// const addressInput = document.getElementById("address") as HTMLInputElement;
+
+let infoMessageEl: HTMLParagraphElement | null = null;
 
 function searchAddressHandler(event: Event) {
 	event.preventDefault();
 
-	// Placeholder coordinates
 	const coordinates = { lat: 40.41, lng: -73.99 };
 
-	// Clear the map div
 	document.getElementById("map")!.innerHTML = "";
 
-	// Create OpenLayers map using ES modules
+	showMockSearchMessage();
+
 	new Map({
 		target: "map",
 		layers: [
@@ -29,6 +29,20 @@ function searchAddressHandler(event: Event) {
 			zoom: 16,
 		}),
 	});
+}
+
+function showMockSearchMessage() {
+	if (!infoMessageEl) {
+		infoMessageEl = document.createElement("p");
+		infoMessageEl.style.marginTop = "1rem";
+		infoMessageEl.style.textAlign = "center";
+		infoMessageEl.style.opacity = "0.8";
+
+		form.insertAdjacentElement("afterend", infoMessageEl);
+	}
+
+	infoMessageEl.textContent =
+		"Due to the lack of an API key, this is a mock search and returns default coordinates.";
 }
 
 form.addEventListener("submit", searchAddressHandler);
