@@ -27,4 +27,5 @@ module.exports = {
 	resolve: {
 		extensions: [".ts", ".js"],
 	},
+	externals: { ol: "ol" },
 };
